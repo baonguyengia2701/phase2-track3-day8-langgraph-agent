@@ -2,7 +2,7 @@
 
 ## 1. Thành viên / Sinh viên
 
-- Tên: [Tên của bạn]
+- Tên: [Nguyễn Gia Bảo - 2A202600156]
 - Repo/commit: main
 - Ngày: 2026-05-11
 
