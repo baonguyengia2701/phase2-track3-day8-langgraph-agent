@@ -33,15 +33,21 @@ def classify_node(state: AgentState) -> dict:
     clean_words = [w.strip("?!.,;:") for w in words]
     route = Route.SIMPLE
     risk_level = "low"
-    if "refund" in query or "delete" in query or "send" in query:
+    
+    risky_kws = ["refund", "delete", "send", "cancel", "remove", "revoke"]
+    tool_kws = ["status", "order", "lookup", "check", "track", "find", "search"]
+    error_kws = ["timeout", "fail", "error", "crash", "unavailable"]
+
+    if any(kw in query for kw in risky_kws):
         route = Route.RISKY
         risk_level = "high"
-    elif "status" in query or "order" in query or "lookup" in query:
+    elif any(kw in query for kw in tool_kws):
         route = Route.TOOL
     elif len(clean_words) < 5 and "it" in clean_words:
         route = Route.MISSING_INFO
-    elif "timeout" in query or "fail" in query:
+    elif any(kw in query for kw in error_kws):
         route = Route.ERROR
+        
     return {
         "route": route.value,
         "risk_level": risk_level,
